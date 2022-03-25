@@ -1,0 +1,42 @@
+plugins {
+    //id 'com.android.application'
+    id 'com.android.library'
+}
+
+android {
+    compileSdk 30
+
+    defaultConfig {
+        //applicationId "com.yixun.saukbaloot"
+        minSdk 19
+        targetSdk 30
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+          }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    //不生成BuildConfig类
+    libraryVariants.all {
+        generateBuildConfigProvider?.get()?.enabled = false
+    }
+}
+
+dependencies {
+    compileOnly fileTree(dir: 'libs', include: ['*.jar', '*.aar']) //本地依赖申明
+    compileOnly files('libs/classes.jar')  //不打入包中
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0' //远程依赖
+    implementation 'com.facebook.android:facebook-android-sdk:12.3.0'
+    implementation 'com.android.billingclient:billing:4.1.0'
+    implementation 'cn.rongcloud.sdk:im_lib:5.1.8.2' // 即时通讯基础能力库
+    implementation 'cn.rongcloud.sdk:rtc_lib:5.1.17.1' // 音视频通话基础能力库
+    implementation 'androidx.multidex:multidex:2.0.1'
+}
